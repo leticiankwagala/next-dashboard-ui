@@ -1,3 +1,7 @@
+import Link from "next/link";
+import Image from "next/image";
+import { role } from "../lib/data";
+
 const menuItems = [
   {
     title: "MENU",
@@ -112,3 +116,29 @@ const menuItems = [
     ],
   },
 ];
+
+const Menu = () => {
+  return (
+    <div className="mt-4 text-sm">
+      {menuItems.map((i) => (
+        <div className="mb-4 flex flex-col gap-2" key={i.title}>
+          <span className="hidden lg:block text-gray-400 font-light my-3">{i.title}</span>
+          {i.items
+            .filter((item) => item.visible.includes(role))
+            .map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="flex w-full items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaPurpleLight"
+              >
+                <Image src={item.icon} alt={item.label} width={20} height={20} />
+                <span className="hidden lg:block">{item.label}</span>
+              </Link>
+            ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Menu;
